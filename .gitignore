@@ -19,3 +19,8 @@
 /public/
 /*.pdf
 /*.xlsx
+
+# Site packaging copies and deployment archives
+/site-publish-hanul/
+/site-source-hanul/
+/handoo-deploy.tar.gz

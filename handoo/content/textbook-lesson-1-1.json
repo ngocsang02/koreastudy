@@ -1,0 +1,291 @@
+{
+  "lesson": "1.1",
+  "sourceLabel": "베트남인을 위한 종합한국어 1권 (개정판-본책) · PDF trong document_korea, 3쇄",
+  "officialUrl": "https://www.kf.or.kr/archives/book/book_view.do?p_cfidx=9827&p_cidx=2067",
+  "scope": "Đã đối chiếu các nhóm Từ vựng cơ bản trang in 32–33 và Từ mới trang in 50 trong PDF sách chính do người dùng cung cấp. Gợi ý sử dụng và ví dụ trên web được biên soạn riêng.",
+  "groups": [
+    {
+      "category": "나라",
+      "categoryTitle": "Quốc gia",
+      "section": "basic",
+      "printedPage": 32,
+      "usage": "Dùng tên nước + 사람 để nói quốc tịch. Ví dụ: 베트남 사람 (người Việt Nam).",
+      "entries": [
+        [
+          "한국",
+          "Hàn Quốc"
+        ],
+        [
+          "베트남",
+          "Việt Nam"
+        ],
+        [
+          "말레이시아",
+          "Malaysia"
+        ],
+        [
+          "일본",
+          "Nhật Bản"
+        ],
+        [
+          "미국",
+          "Mỹ"
+        ],
+        [
+          "중국",
+          "Trung Quốc"
+        ],
+        [
+          "태국",
+          "Thái Lan"
+        ],
+        [
+          "호주",
+          "Úc"
+        ],
+        [
+          "몽골",
+          "Mông Cổ"
+        ],
+        [
+          "인도네시아",
+          "Indonesia"
+        ],
+        [
+          "필리핀",
+          "Philippines"
+        ],
+        [
+          "인도",
+          "Ấn Độ"
+        ],
+        [
+          "영국",
+          "Anh"
+        ],
+        [
+          "독일",
+          "Đức"
+        ],
+        [
+          "프랑스",
+          "Pháp"
+        ],
+        [
+          "러시아",
+          "Nga"
+        ]
+      ]
+    },
+    {
+      "category": "직업",
+      "categoryTitle": "Nghề nghiệp",
+      "section": "basic",
+      "printedPage": 33,
+      "usage": "Dùng danh từ + 입니다 để giới thiệu nghề nghiệp hoặc vai trò. Ví dụ: 저는 학생입니다. (Tôi là học sinh/sinh viên.)",
+      "entries": [
+        [
+          "학생",
+          "học sinh, sinh viên"
+        ],
+        [
+          "회사원",
+          "nhân viên công ty"
+        ],
+        [
+          "은행원",
+          "nhân viên ngân hàng"
+        ],
+        [
+          "선생님",
+          "thầy, cô giáo"
+        ],
+        [
+          "의사",
+          "bác sĩ"
+        ],
+        [
+          "공무원",
+          "công chức"
+        ],
+        [
+          "관광 가이드",
+          "hướng dẫn viên du lịch"
+        ],
+        [
+          "주부",
+          "người nội trợ"
+        ],
+        [
+          "약사",
+          "dược sĩ"
+        ],
+        [
+          "운전기사",
+          "tài xế"
+        ]
+      ]
+    },
+    {
+      "category": "인사말",
+      "categoryTitle": "Lời chào",
+      "section": "basic",
+      "printedPage": 33,
+      "entries": [
+        [
+          "안녕하세요?",
+          "xin chào (lịch sự)",
+          "Dùng khi gặp người khác trong giao tiếp lịch sự thông thường."
+        ],
+        [
+          "안녕하십니까?",
+          "xin chào (trang trọng)",
+          "Trang trọng hơn 안녕하세요; thường dùng khi phát biểu hoặc trong bối cảnh chính thức."
+        ],
+        [
+          "안녕히 가세요.",
+          "tạm biệt người rời đi",
+          "Người ở lại nói với người ra về. Phân biệt với 안녕히 계세요."
+        ],
+        [
+          "안녕히 계세요.",
+          "tạm biệt người ở lại",
+          "Người rời đi nói với người còn ở lại."
+        ],
+        [
+          "처음 뵙겠습니다.",
+          "rất hân hạnh được gặp lần đầu",
+          "Lời chào trang trọng trong lần đầu gặp mặt."
+        ],
+        [
+          "반갑습니다.",
+          "rất vui được gặp",
+          "Dùng để thể hiện niềm vui khi gặp hoặc được giới thiệu với ai đó."
+        ]
+      ]
+    },
+    {
+      "category": "새 단어",
+      "categoryTitle": "Từ mới trong bài",
+      "section": "new",
+      "printedPage": 50,
+      "entries": [
+        [
+          "국어국문학과",
+          "khoa Ngôn ngữ và Văn học Hàn Quốc",
+          "국어국문학과 là tên khoa/ngành nghiên cứu tiếng Hàn và văn học Hàn Quốc."
+        ],
+        [
+          "국적",
+          "quốc tịch",
+          "Dùng khi hỏi hoặc khai thông tin quốc tịch."
+        ],
+        [
+          "네",
+          "vâng, có",
+          "Câu đáp khẳng định lịch sự; hiểu theo nội dung câu hỏi."
+        ],
+        [
+          "대학교",
+          "trường đại học",
+          "Dùng để gọi một trường đại học; phân biệt với 대학생 (sinh viên)."
+        ],
+        [
+          "대학생",
+          "sinh viên đại học",
+          "Chỉ người đang học đại học."
+        ],
+        [
+          "보기",
+          "mẫu, ví dụ",
+          "Trong bài tập, 보기 thường chỉ phần mẫu để làm theo."
+        ],
+        [
+          "사람",
+          "người",
+          "Có thể đi sau tên nước: 한국 사람, 베트남 사람."
+        ],
+        [
+          "씨",
+          "anh/chị/bạn (cách gọi lịch sự sau tên)",
+          "Thường đặt sau tên đầy đủ hoặc tên riêng; viết cách tên, ví dụ: 민수 씨."
+        ],
+        [
+          "아니요",
+          "không (lời đáp lịch sự)",
+          "Dùng để trả lời phủ định; phân biệt với 네."
+        ],
+        [
+          "은행",
+          "ngân hàng",
+          "Dùng chỉ địa điểm hoặc tổ chức ngân hàng."
+        ],
+        [
+          "이",
+          "này (đứng trước danh từ)",
+          "Ví dụ 이 사람 nghĩa là người này. Ở mục này, 이 là từ chỉ định, không phải trợ từ chủ ngữ."
+        ],
+        [
+          "이름",
+          "tên",
+          "Dùng để hỏi hoặc giới thiệu tên; dạng kính ngữ là 성함."
+        ],
+        [
+          "이메일",
+          "email, thư điện tử",
+          "Có thể kết hợp 주소: 이메일 주소 (địa chỉ email)."
+        ],
+        [
+          "저",
+          "tôi (khiêm nhường)",
+          "Dùng để nói về bản thân một cách lịch sự. Chọn nghĩa ‘tôi’ trong ngữ cảnh bài này."
+        ],
+        [
+          "전화",
+          "điện thoại; cuộc gọi",
+          "Có thể kết hợp 번호: 전화번호 (số điện thoại)."
+        ],
+        [
+          "제",
+          "của tôi (khiêm nhường)",
+          "Dạng rút gọn của 저의. Ví dụ 제 이름: tên của tôi."
+        ],
+        [
+          "주소",
+          "địa chỉ",
+          "Dùng cho địa chỉ nhà hoặc địa chỉ liên lạc."
+        ],
+        [
+          "직업",
+          "nghề nghiệp",
+          "Dùng khi hỏi hoặc ghi thông tin về nghề nghiệp."
+        ],
+        [
+          "학과",
+          "khoa, bộ môn, ngành học",
+          "Dùng để nói về đơn vị hoặc ngành học trong trường đại học."
+        ],
+        [
+          "학번",
+          "mã số sinh viên",
+          "Mã số định danh của sinh viên; trong một số ngữ cảnh cũng gắn với khóa nhập học."
+        ],
+        [
+          "학생증",
+          "thẻ học sinh, thẻ sinh viên",
+          "Chứng từ xác nhận tư cách học sinh/sinh viên."
+        ],
+        [
+          "한국어",
+          "tiếng Hàn",
+          "Tên ngôn ngữ; có thể kết hợp với 공부하다 (học)."
+        ],
+        [
+          "한국어과",
+          "khoa tiếng Hàn",
+          "Tên khoa tiếng Hàn."
+        ]
+      ]
+    }
+  ]
+}

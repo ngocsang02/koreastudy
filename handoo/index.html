@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#36afa7"><meta name="description" content="Học tiếng Hàn từng bài: từ vựng có ví dụ, ngữ pháp có giải thích, và thẻ ôn tập. 6 quyển Tiếng Hàn Tổng Hợp.">
+  <title>__BRAND__ — Học tiếng Hàn từng bài</title>
+  <link rel="stylesheet" href="/src/styles.css">
+  <script type="module" src="/src/main.js"></script>
+</head>
+<body>
+<a id="skip-content" class="skip-link" href="#workspace">Đến nội dung bài học</a>
+<header class="site-header"><div class="header-inner">
+  <button class="mobile-menu-toggle" type="button" aria-label="Mở menu" aria-controls="primary-nav" aria-expanded="false"><span></span><span></span><span></span></button>
+  <a href="#home" class="brand" aria-label="__BRAND__ · Trang chủ"><span class="brand-mark" aria-hidden="true">ㅎ</span>__BRAND__</a>
+  <div class="mobile-nav-backdrop" hidden></div><nav id="primary-nav" aria-label="Điều hướng chính"><div class="mobile-nav-header"><a href="#home" class="mobile-nav-brand" aria-label="__BRAND__ · Trang chủ">__BRAND__</a></div><button data-nav="home" class="nav-link">Home</button><button data-nav="theory" class="nav-link">Lý thuyết</button><button data-nav="review" class="nav-link">Ôn tập <span id="due-badge">0</span></button><button data-nav="saved" class="nav-link">Đã lưu <span id="saved-count">0</span></button><button data-nav="search" class="nav-link">Tra cứu</button></nav>
+  <button id="account-button" class="button button-outline account-button" aria-label="Tài khoản"><span class="account-label">Tài khoản</span><svg class="account-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></button>
+</div></header>
+<main id="workspace" tabindex="-1">
+  <div class="page-top"><div id="breadcrumbs" class="breadcrumbs" aria-label="Vị trí hiện tại"></div><span id="sync-status" role="status" class="sync-status">Tiến độ lưu trên thiết bị</span></div>
+  <div id="screen" aria-busy="true">
+    <section class="startup-state" role="status" aria-live="polite">
+      <span class="startup-mark" aria-hidden="true">ㅎ</span>
+      <div class="startup-copy">
+        <strong>__BRAND__ đang chuẩn bị bài học</strong>
+        <p>Nội dung sẽ xuất hiện ngay khi tải xong. Bạn có thể đợi thêm một chút hoặc thử tải lại trang.</p>
+        <button class="button button-outline startup-retry" type="button" onclick="location.reload()">Tải lại trang</button>
+      </div>
+      <span class="startup-spinner" aria-hidden="true"></span>
+    </section>
+  </div>
+</main>
+<footer class="site-footer"><a href="#home" class="footer-brand">__BRAND__</a><span>Học từng bài. Hiểu từng chút.</span><button class="text-button" id="open-sources">Nội dung & nguồn tham khảo ↗</button></footer>
+
+<dialog id="detail" class="detail-dialog"><div class="dialog-top"><span id="detail-meta"></span><button id="close-detail" class="close-button" aria-label="Đóng bài học">✕</button></div><div class="dialog-body"><div id="detail-category" class="eyebrow"></div><h2 id="detail-title" lang="ko"></h2><div id="detail-subtitle" class="detail-subtitle"></div><div class="detail-actions"><button id="detail-speak" class="button button-outline">Nghe phát âm</button><button id="detail-save" class="button button-outline"></button><button id="detail-learn" class="button button-primary"></button></div><div id="detail-content"></div><p id="detail-source" class="source-note"></p></div><div class="dialog-bottom"><button id="prev-detail" class="button button-outline">← Trước</button><span id="detail-position"></span><button id="next-detail" class="button button-outline">Tiếp theo →</button></div></dialog>
+
+<dialog id="sources-dialog"><div class="dialog-top"><b>Nội dung & nguồn tham khảo</b><button id="close-sources" class="close-button" aria-label="Đóng nguồn tham khảo">✕</button></div><div class="dialog-body"><h2>Học với ngữ cảnh rõ ràng.</h2><h3>Ngữ pháp</h3><p class="body-copy">Giữ nguyên cấu trúc và ghi chú từ file Excel của bạn. Mỗi mục có vị trí ô nguồn để đối chiếu.</p><h3>Đối chiếu từ vựng với giáo trình</h3><p id="editorial-note" class="body-copy"></p><p class="body-copy">Nguồn chính thức của sáu quyển đã được tìm tại Korea Foundation. Mục lục được đối chiếu với Excel. Danh sách từng từ chỉ được đánh dấu đã đối chiếu khi đã kiểm tra trực tiếp trang sách; các bài chưa kiểm tra vẫn mang nhãn chờ đối chiếu. Chưa xác định toàn bộ danh sách phù hợp với mọi bản in MCBooks.</p><div id="source-links" class="source-links"></div><p class="source-note">Giọng đọc sử dụng giọng Hàn của trình duyệt hoặc thiết bị. Nếu chưa có giọng Hàn, chức năng nghe có thể không hoạt động.</p></div></dialog>
+
+<dialog id="account-dialog" class="account-dialog"><button id="close-account" class="account-close" aria-label="Đóng tài khoản">×</button><div class="account-body"><div class="account-mark" aria-hidden="true">ㅎ</div><h2 id="account-title">ĐĂNG NHẬP</h2><p class="body-copy" id="account-description"></p><div class="auth-social" id="auth-social"><button type="button" id="google-login" aria-label="Tiếp tục với Google"><span class="google-mark">G</span></button><button type="button" id="apple-login" aria-label="Tiếp tục với Apple"><span aria-hidden="true">●</span></button></div><div id="auth-tabs" class="auth-tabs" hidden><button type="button" id="login-mode" class="active">Đăng nhập</button><button type="button" id="register-mode">Đăng ký</button></div><form id="login-form" class="auth-form" hidden><label class="register-only" for="register-name">Tên của bạn</label><input class="register-only" type="text" id="register-name" autocomplete="name" placeholder="Tên của bạn"><label class="register-only" for="register-phone">Số điện thoại</label><input class="register-only" type="tel" id="register-phone" autocomplete="tel" placeholder="Số điện thoại (không bắt buộc)"><label for="login-email">Email của bạn</label><input type="email" id="login-email" required autocomplete="email" placeholder="Email"><label for="login-password">Mật khẩu</label><div class="password-wrap"><input type="password" id="login-password" required autocomplete="current-password" minlength="8" placeholder="Mật khẩu"><button type="button" class="password-toggle" aria-label="Hiện mật khẩu">◉</button></div><button type="button" class="forgot-password" id="forgot-password">Quên mật khẩu?</button><label class="register-only recovery-only" for="confirm-password">Xác nhận mật khẩu</label><div class="password-wrap register-only recovery-only"><input type="password" id="confirm-password" autocomplete="new-password" minlength="8" placeholder="Xác nhận mật khẩu"><button type="button" class="password-toggle" aria-label="Hiện mật khẩu">◉</button></div><label class="terms-row register-only"><input type="checkbox" id="accept-terms"> Đồng ý với Điều khoản và Chính sách bảo mật</label><button class="button button-primary auth-submit" type="submit" id="send-link">Đăng nhập</button></form><div id="signed-in" hidden><p id="account-email"></p><div class="detail-actions"><button class="button button-primary" id="sync-now">Đồng bộ ngay</button><button class="button button-outline" id="sign-out">Đăng xuất</button></div></div><p class="auth-switch" id="auth-switch" hidden></p><p id="account-message" role="status" class="body-copy"></p></div></dialog>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body></html>
