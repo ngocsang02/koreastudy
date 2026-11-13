@@ -77,12 +77,21 @@ body{background:#f6f6f7;color:#202a35}
 
 /* Keep the full primary navigation visible and scrollable on narrow screens. */
 @media(max-width:760px){
+  .site-header .account-actions{grid-column:3;grid-row:1;justify-self:end;margin:0;display:flex;align-items:center;gap:4px}
+  .site-header .account-button{margin:0;padding:0;width:40px;min-height:40px;border:0;border-radius:50%;background:var(--color-brand-hover);color:var(--color-surface)}
+  .site-header .register-button{padding:7px 9px;min-height:36px;font-size:10px}
   .site-header .header-inner{height:auto;min-height:68px;flex-wrap:wrap;gap:0;padding:8px 20px 0}
   .site-header .brand,.site-header .account-button{margin-top:2px;margin-bottom:8px}
   .site-header .account-button{margin-left:auto}
   .site-header .header-inner nav{order:3;flex:0 0 calc(100% + 40px);width:calc(100% + 40px);margin:0 -20px;padding:4px 12px 8px;min-width:0;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin}
   .site-header .nav-link{flex:0 0 auto;min-height:40px;padding:9px 12px}
 }
+.account-actions{margin-left:auto;display:flex;align-items:center;gap:8px}.account-button.is-signed-in .account-label{display:none}.account-button.is-signed-in .account-icon{display:block;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}.account-button.is-signed-in{width:42px;height:42px;min-height:42px;padding:0;justify-content:center;border-radius:50%}
+.site-header .account-actions{height:68px;gap:0;background:#36afa7;color:#fff;padding:0 18px}.site-header .account-actions .account-flag{font-size:19px;margin-right:20px;line-height:1}.site-header .account-actions .account-button,.site-header .account-actions .register-button{min-height:0;padding:0;border:0;border-radius:0;background:transparent;color:#fff;font-size:16px;font-weight:700}.site-header .account-actions .account-separator{padding:0 5px;font-size:16px;font-weight:700}.site-header .account-actions .account-button.is-signed-in{width:42px;height:42px;min-height:42px;padding:0;border-radius:50%;background:#178e86}.site-header .account-actions .register-button[hidden],.site-header .account-actions .account-separator[hidden],.site-header .account-actions .account-flag[hidden]{display:none}
+@media(max-width:760px){.site-header .account-button:not(.is-signed-in){width:auto;min-height:36px;padding:7px 9px;border:1px solid #ffffffa8;border-radius:7px;background:transparent}.site-header .account-button:not(.is-signed-in) .account-label{display:inline}.site-header .account-button:not(.is-signed-in) .account-icon{display:none}}
+@media(max-width:760px){.site-header .account-actions{height:68px;padding:0 8px;gap:0;background:transparent}.site-header .account-actions .account-flag{margin-right:6px;font-size:15px}.site-header .account-actions .account-button:not(.is-signed-in){width:auto;min-height:36px;padding:0;border:0;border-radius:0;background:transparent}.site-header .account-actions .account-label{display:inline}.site-header .account-actions .account-button:not(.is-signed-in) .account-icon{display:none}.site-header .account-actions .register-button,.site-header .account-actions .account-button{font-size:11px}.site-header .account-actions .account-separator{padding:0 3px;font-size:11px}}
+.site-header .account-actions .account-button:not(.is-signed-in):hover .account-label,.site-header .account-actions .register-button:hover{text-decoration:underline}
+.site-header .account-actions .account-button.is-signed-in .account-label{display:none}
 @media(max-width:420px){.site-header .header-inner{padding-right:16px;padding-left:16px}.site-header .header-inner nav{flex-basis:calc(100% + 32px);width:calc(100% + 32px);margin-right:-16px;margin-left:-16px}}
 .site-header .button.button-outline.account-button:hover{background:#e9f7f5;border-color:#168e86;color:#176f69;filter:none}
 .mobile-menu-toggle,.account-icon{display:none}

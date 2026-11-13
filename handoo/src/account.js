@@ -3,20 +3,24 @@ export async function setupAccount(store, reviews) {
   const dialog = $('account-dialog');
   let recoveryMode = false;
   let sessionUser = null;
-  $('account-button').onclick = () => dialog.showModal();
+  $('account-button').onclick = () => { setAuthMode('login'); dialog.showModal(); };
+  $('register-button').onclick = () => { setAuthMode('register'); dialog.showModal(); };
   $('close-account').onclick = () => dialog.close();
   let authMode = 'login';
   const setAuthMode = mode => {
     authMode = mode;
+    recoveryMode = mode === 'recovery';
     dialog.classList.toggle('is-register', mode === 'register');
     dialog.classList.toggle('is-recovery', mode === 'recovery');
-    $('account-title').textContent = mode === 'login' ? 'ĐĂNG NHẬP' : mode === 'register' ? 'ĐĂNG KÝ' : 'ĐẶT LẠI MẬT KHẨU';
+    $('account-title').textContent = mode === 'recovery' ? 'ĐẶT LẠI MẬT KHẨU' : sessionUser ? 'TÀI KHOẢN' : mode === 'register' ? 'ĐĂNG KÝ' : 'ĐĂNG NHẬP';
     $('send-link').textContent = mode === 'login' ? 'Đăng nhập' : mode === 'register' ? 'Đăng ký' : 'Lưu mật khẩu mới';
     $('login-password').autocomplete = mode === 'login' ? 'current-password' : 'new-password';
     $('login-form').querySelector('label[for="login-password"]').textContent = mode === 'recovery' ? 'Mật khẩu mới' : 'Mật khẩu';
     $('confirm-password').required = mode === 'register' || mode === 'recovery';
     $('register-name').required = mode === 'register';
     $('accept-terms').required = mode === 'register';
+    $('login-form').hidden = !!sessionUser && mode !== 'recovery';
+    $('signed-in').hidden = !sessionUser || mode === 'recovery';
     $('forgot-password').hidden = mode !== 'login';
     $('login-mode').classList.toggle('active', mode === 'login');
     $('register-mode').classList.toggle('active', mode === 'register');
@@ -46,7 +50,18 @@ export async function setupAccount(store, reviews) {
   const key = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
   if (!url || !key) {
     $('account-description').textContent = 'Bạn đang học ở chế độ khách. Tiến độ được lưu trong trình duyệt hiện tại. Chức năng đăng nhập và đồng bộ sẽ xuất hiện khi website được kết nối Supabase.';
+    $('login-form').hidden = true;
     $('auth-social').hidden = true;
+    const openUnavailable = mode => {
+      setAuthMode(mode);
+      $('login-form').hidden = true;
+      $('auth-tabs').hidden = true;
+      $('auth-social').hidden = true;
+      $('auth-switch').hidden = true;
+      dialog.showModal();
+    };
+    $('account-button').onclick = () => openUnavailable('login');
+    $('register-button').onclick = () => openUnavailable('register');
     return;
   }
   const {createClient} = await import('@supabase/supabase-js');
@@ -84,8 +99,14 @@ export async function setupAccount(store, reviews) {
     $('auth-tabs').hidden = !!sessionUser || recoveryMode;
     $('auth-social').hidden = !!sessionUser || recoveryMode;
     $('auth-switch').hidden = !!sessionUser || recoveryMode;
-    $('account-button').textContent = sessionUser ? 'Tài khoản ✓' : 'Đăng nhập';
-    $('account-email').textContent = sessionUser?.email || '';
+    document.querySelector('.account-label').textContent = sessionUser ? 'Tài khoản' : 'Đăng nhập';
+    $('account-title').textContent = recoveryMode ? 'ĐẶT LẠI MẬT KHẨU' : sessionUser ? 'TÀI KHOẢN' : authMode === 'register' ? 'ĐĂNG KÝ' : 'ĐĂNG NHẬP';
+    $('account-button').setAttribute('aria-label', sessionUser ? 'Tài khoản' : 'Đăng nhập');
+    $('account-button').classList.toggle('is-signed-in', !!sessionUser);
+    $('register-button').hidden = !!sessionUser;
+    document.querySelector('.account-separator').hidden = !!sessionUser;
+    document.querySelector('.account-flag').hidden = !!sessionUser;
+    $('account-email').textContent = sessionUser?.email || sessionUser?.user_metadata?.full_name || sessionUser?.phone || (sessionUser ? 'Đã đăng nhập' : '');
     $('account-description').hidden = !sessionUser || recoveryMode;
     $('account-description').textContent = sessionUser ? 'Tiến độ tài khoản được đồng bộ giữa các thiết bị. Tiến độ của chế độ khách được giữ riêng trên máy.' : 'Nhận liên kết đăng nhập qua email để đồng bộ tiến độ giữa các thiết bị. Tiến độ khách và tài khoản được lưu riêng.';
     await reviews?.connect(sessionUser?.id || null,sessionUser?reviewAdapter:null);
@@ -94,8 +115,12 @@ export async function setupAccount(store, reviews) {
   // Leave the auth callback synchronous; database calls run outside its lock.
   client.auth.onAuthStateChange((event,session) => { setTimeout(() => { recoveryMode=event==='PASSWORD_RECOVERY'; void applySession(session).then(()=>{if(recoveryMode){setAuthMode('recovery');$('login-form').hidden=false;$('login-password').focus();}}); },0); });
   for (const provider of ['google','apple']) $(provider+'-login').onclick = async () => {
+    const button = $(provider+'-login');
+    button.disabled = true;
+    $('account-message').textContent = 'Đang chuyển đến trang đăng nhập…';
     try { const {error}=await client.auth.signInWithOAuth({provider,options:{redirectTo:location.origin+location.pathname}}); if(error) throw error; }
     catch { $('account-message').textContent='Chưa thể đăng nhập bằng '+(provider==='google'?'Google':'Apple')+'. Kiểm tra cấu hình provider trong Supabase.'; }
+    finally { button.disabled = false; }
   };
   $('forgot-password').onclick = async () => {
     const email=$('login-email').value.trim();
@@ -116,14 +141,14 @@ export async function setupAccount(store, reviews) {
       } else if(authMode==='register') {
         if(password!==$('confirm-password').value) throw new Error('Mật khẩu xác nhận chưa khớp.');
         if(!$('accept-terms').checked) throw new Error('Vui lòng đồng ý với Điều khoản và Chính sách bảo mật.');
-        const {error}=await client.auth.signUp({email,password,options:{data:{full_name:$('register-name').value.trim(),phone:$('register-phone').value.trim()},emailRedirectTo:location.origin+location.pathname}});
+        const {data,error}=await client.auth.signUp({email,password,options:{data:{full_name:$('register-name').value.trim(),phone:$('register-phone').value.trim()},emailRedirectTo:location.origin+location.pathname}});
         if(error) throw error;
-        $('account-message').textContent='Đã tạo tài khoản. Hãy kiểm tra email để xác nhận trước khi đăng nhập.';
+        $('account-message').textContent=data.session ? 'Đăng ký hoàn tất và bạn đã đăng nhập.' : 'Nếu email đủ điều kiện đăng ký, bạn sẽ nhận được email xác nhận. Hãy mở liên kết trong email trước khi đăng nhập.';
       } else {
         const {error}=await client.auth.signInWithPassword({email,password});
         if(error) throw error;
       }
-    } catch (error) { $('account-message').textContent=error.message==='Invalid login credentials'?'Email hoặc mật khẩu chưa đúng.':error.message||'Chưa thể xử lý yêu cầu. Vui lòng thử lại.'; }
+    } catch (error) { $('account-message').textContent=error.code==='email_not_confirmed'||error.message==='Email not confirmed'?'Email chưa được xác nhận. Hãy kiểm tra hộp thư và mở liên kết xác nhận trước khi đăng nhập.':error.message==='Invalid login credentials'?'Email hoặc mật khẩu chưa đúng.':error.message||'Chưa thể xử lý yêu cầu. Vui lòng thử lại.'; }
     finally { $('send-link').disabled = false; }
   };
   $('sync-now').onclick = async () => { $('sync-now').disabled = true; await syncAll(); $('sync-now').disabled = false; $('account-message').textContent = store.status === 'synced'&&(!reviews||reviews.status==='synced') ? 'Đã đồng bộ tiến độ và lịch ôn.' : 'Chưa đồng bộ đầy đủ tiến độ hoặc lịch ôn. Dữ liệu vẫn được giữ trên máy; kiểm tra kết nối và migration Supabase rồi thử lại.'; };
