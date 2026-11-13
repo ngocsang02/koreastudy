@@ -5,7 +5,9 @@ export async function setupAccount(store, reviews) {
   let sessionUser = null;
   $('account-button').onclick = () => { setAuthMode('login'); dialog.showModal(); };
   $('register-button').onclick = () => { setAuthMode('register'); dialog.showModal(); };
-  $('close-account').onclick = () => dialog.close();
+  dialog.addEventListener('click', event => {
+    if (event.target === dialog) dialog.close();
+  });
   let authMode = 'login';
   const setAuthMode = mode => {
     authMode = mode;
@@ -38,12 +40,25 @@ export async function setupAccount(store, reviews) {
   document.querySelectorAll('.password-toggle').forEach(button => button.onclick = () => {
     const input = button.parentElement.querySelector('input');
     input.type = input.type === 'password' ? 'text' : 'password';
+    button.classList.toggle('is-visible', input.type === 'text');
     button.setAttribute('aria-label', input.type === 'password' ? 'Hiện mật khẩu' : 'Ẩn mật khẩu');
   });
   const statusLabels = {local:'Tiến độ lưu trên thiết bị',syncing:'Đang đồng bộ…',synced:'Đã đồng bộ',pending:'Đang chờ đồng bộ', 'sync-error':'Chưa đồng bộ · thử lại trong Tài khoản','storage-error':'Chưa lưu được trên thiết bị'};
   const updateSyncLabel=()=>{
     const states=[store.status,reviews?.status].filter(Boolean);
     $('sync-status').textContent=states.includes('storage-error')?'Chưa lưu được đầy đủ trên máy':states.includes('sync-error')?'Tiến độ hoặc lịch ôn chưa đồng bộ':states.includes('syncing')?'Đang đồng bộ…':states.every(s=>s==='synced')?'Đã đồng bộ tiến độ & lịch ôn':statusLabels[store.status]||statusLabels.local;
+    updateAccountSyncUI();
+  };
+  const updateAccountSyncUI=()=>{
+    const status=$('account-sync-status'), retry=$('sync-now');
+    if(!status||!retry)return;
+    const states=[store.status,reviews?.status].filter(Boolean);
+    const syncing=states.includes('syncing');
+    const failed=states.includes('sync-error')||states.includes('storage-error');
+    const synced=states.length>0&&states.every(value=>value==='synced');
+    status.textContent=syncing?'Đang tự động đồng bộ tiến độ và lịch ôn…':synced?'Đã đồng bộ tiến độ và lịch ôn.':failed?'Chưa đồng bộ được đầy đủ. Dữ liệu vẫn được lưu trên thiết bị.':states.includes('pending')?'Đang chờ kết nối để hoàn tất đồng bộ…':'Đang chuẩn bị đồng bộ tiến độ và lịch ôn…';
+    retry.hidden=syncing||synced||(!failed&&!states.includes('pending'));
+    retry.disabled=syncing;
   };
   store.subscribe(updateSyncLabel);reviews?.subscribe(updateSyncLabel);
   const url = import.meta.env.VITE_SUPABASE_URL;
@@ -94,21 +109,28 @@ export async function setupAccount(store, reviews) {
   const syncAll=()=>Promise.all([store.sync(),reviews?.sync()]);
   async function applySession(session) {
     sessionUser = session?.user || null;
+    const metadata = sessionUser?.user_metadata || {};
+    const displayName = [metadata.full_name, metadata.name, sessionUser?.email?.split('@')[0], sessionUser?.phone]
+      .find(value => typeof value === 'string' && value.trim())?.trim() || 'Tài khoản';
     $('login-form').hidden = !!sessionUser && !recoveryMode;
     $('signed-in').hidden = !sessionUser || recoveryMode;
     $('auth-tabs').hidden = !!sessionUser || recoveryMode;
     $('auth-social').hidden = !!sessionUser || recoveryMode;
     $('auth-switch').hidden = !!sessionUser || recoveryMode;
     document.querySelector('.account-label').textContent = sessionUser ? 'Tài khoản' : 'Đăng nhập';
+    $('account-name').textContent = sessionUser ? displayName : '';
+    $('account-name').hidden = !sessionUser;
     $('account-title').textContent = recoveryMode ? 'ĐẶT LẠI MẬT KHẨU' : sessionUser ? 'TÀI KHOẢN' : authMode === 'register' ? 'ĐĂNG KÝ' : 'ĐĂNG NHẬP';
     $('account-button').setAttribute('aria-label', sessionUser ? 'Tài khoản' : 'Đăng nhập');
     $('account-button').classList.toggle('is-signed-in', !!sessionUser);
     $('register-button').hidden = !!sessionUser;
     document.querySelector('.account-separator').hidden = !!sessionUser;
     document.querySelector('.account-flag').hidden = !!sessionUser;
-    $('account-email').textContent = sessionUser?.email || sessionUser?.user_metadata?.full_name || sessionUser?.phone || (sessionUser ? 'Đã đăng nhập' : '');
+    $('account-email').textContent = sessionUser ? (sessionUser.email ? `${displayName} · ${sessionUser.email}` : displayName) : '';
     $('account-description').hidden = !sessionUser || recoveryMode;
-    $('account-description').textContent = sessionUser ? 'Tiến độ tài khoản được đồng bộ giữa các thiết bị. Tiến độ của chế độ khách được giữ riêng trên máy.' : 'Nhận liên kết đăng nhập qua email để đồng bộ tiến độ giữa các thiết bị. Tiến độ khách và tài khoản được lưu riêng.';
+    $('account-description').textContent = sessionUser ? 'Tiến độ và lịch ôn tự động đồng bộ giữa các thiết bị sau khi đăng nhập. Tiến độ khách được giữ riêng trên máy.' : 'Nhận liên kết đăng nhập qua email để đồng bộ tiến độ giữa các thiết bị. Tiến độ khách và tài khoản được lưu riêng.';
+    if(sessionUser && $('account-message').textContent === 'Đang xử lý…') $('account-message').textContent = '';
+    updateAccountSyncUI();
     await reviews?.connect(sessionUser?.id || null,sessionUser?reviewAdapter:null);
     await store.connect(sessionUser?.id || null, sessionUser ? adapter : null);
   }
@@ -151,7 +173,7 @@ export async function setupAccount(store, reviews) {
     } catch (error) { $('account-message').textContent=error.code==='email_not_confirmed'||error.message==='Email not confirmed'?'Email chưa được xác nhận. Hãy kiểm tra hộp thư và mở liên kết xác nhận trước khi đăng nhập.':error.message==='Invalid login credentials'?'Email hoặc mật khẩu chưa đúng.':error.message||'Chưa thể xử lý yêu cầu. Vui lòng thử lại.'; }
     finally { $('send-link').disabled = false; }
   };
-  $('sync-now').onclick = async () => { $('sync-now').disabled = true; await syncAll(); $('sync-now').disabled = false; $('account-message').textContent = store.status === 'synced'&&(!reviews||reviews.status==='synced') ? 'Đã đồng bộ tiến độ và lịch ôn.' : 'Chưa đồng bộ đầy đủ tiến độ hoặc lịch ôn. Dữ liệu vẫn được giữ trên máy; kiểm tra kết nối và migration Supabase rồi thử lại.'; };
+  $('sync-now').onclick = async () => { $('sync-now').disabled = true; await syncAll(); updateAccountSyncUI(); $('account-message').textContent = store.status === 'synced'&&(!reviews||reviews.status==='synced') ? 'Đã đồng bộ tiến độ và lịch ôn.' : 'Chưa đồng bộ được. Dữ liệu vẫn được giữ trên thiết bị; kiểm tra kết nối rồi thử lại.'; };
   $('sign-out').onclick = async () => {
     $('sign-out').disabled = true;
     try {const {error}=await client.auth.signOut({scope:'local'});if(error)throw error;await applySession(null);$('account-message').textContent='Đã đăng xuất. Bạn đang ở chế độ khách.';}
