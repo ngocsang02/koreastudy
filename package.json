@@ -1,0 +1,7 @@
+{
+  "name": "handoo-project-runner",
+  "private": true,
+  "scripts": {
+    "start": "npm --prefix handoo start"
+  }
+}

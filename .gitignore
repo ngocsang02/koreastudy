@@ -1,0 +1,21 @@
+# Dependencies and generated output
+**/node_modules/
+**/dist/
+**/tmp/
+**/.git/
+**/.sites-checkout/
+**/.env
+**/.env.*
+!**/.env.example
+**/*.local
+**/.vercel/
+**/.netlify/
+**/.sites-runtime/
+**/__pycache__/
+**/*.tar.gz
+
+# Imported reference books and large source documents
+/document_korea/
+/public/
+/*.pdf
+/*.xlsx
